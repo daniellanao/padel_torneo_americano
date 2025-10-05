@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
   return (
@@ -24,6 +26,11 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
+        <div className="flex items-center gap-2 text-gray-700">
+          <FontAwesomeIcon icon={faUser} className="text-blue-600" />
+          <span>Jugador</span>
+          <FontAwesomeIcon icon={faArrowRight} className="text-green-500" />
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
