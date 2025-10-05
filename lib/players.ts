@@ -7,7 +7,7 @@ export class PlayerService {
     const { data, error } = await supabase
       .from('players')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('name', { ascending: true });
 
     if (error) {
       throw new Error(`Error fetching players: ${error.message}`);

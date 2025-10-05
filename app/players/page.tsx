@@ -101,7 +101,7 @@ export default function PlayersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -109,10 +109,10 @@ export default function PlayersPage() {
             <div className="flex items-center">
               <FontAwesomeIcon icon={faUsers} className="text-blue-600 text-2xl mr-3" />
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                   Players Management
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   Manage tournament players
                 </p>
               </div>
@@ -121,7 +121,7 @@ export default function PlayersPage() {
             {!showForm && (
               <button
                 onClick={() => setShowForm(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" />
                 Add Player
@@ -138,16 +138,16 @@ export default function PlayersPage() {
                 <FontAwesomeIcon icon={faSpinner} className="h-5 w-5 text-red-400" />
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+                <h3 className="text-xs font-medium text-red-800 dark:text-red-200">
                   Error
                 </h3>
-                <div className="mt-2 text-sm text-red-700 dark:text-red-300">
+                <div className="mt-2 text-xs text-red-700 dark:text-red-300">
                   {error}
                 </div>
                 <div className="mt-4">
                   <button
                     onClick={() => setError(null)}
-                    className="text-sm bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-200 px-3 py-1 rounded-md hover:bg-red-200 dark:hover:bg-red-700 transition-colors"
+                    className="text-xs bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-200 px-2 py-1 rounded-md hover:bg-red-200 dark:hover:bg-red-700 transition-colors"
                   >
                     Dismiss
                   </button>
