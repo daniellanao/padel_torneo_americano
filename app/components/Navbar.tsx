@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faUsers, faTrophy, faTable, faMedal } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faUsers, faTrophy, faTable, faMedal, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +14,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Players', href: '/players', icon: faUsers },
     { name: 'Teams', href: '/teams', icon: faTrophy },
+    { name: 'Groups', href: '/groups', icon: faLayerGroup },
     { name: 'Group Stage', href: '/group-stage', icon: faTable },
     { name: 'Finals', href: '/finals', icon: faMedal },
   ];
