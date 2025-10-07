@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrophy, faSpinner, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Final, CreateFinalData } from '@/types/final';
+import { Final, CreateFinalData, UpdateFinalData } from '@/types/final';
 import { getFinals, createFinal } from '@/lib/finals';
 import FinalCard from '../components/FinalCard';
 import FinalForm from '../components/FinalForm';
@@ -33,10 +33,11 @@ export default function FinalsPage() {
     }
   };
 
-  const handleCreateFinal = async (data: CreateFinalData) => {
+  const handleSubmitFinal = async (data: CreateFinalData | UpdateFinalData) => {
     try {
       setIsSubmitting(true);
-      await createFinal(data);
+      // Since we're only creating finals, we can safely cast to CreateFinalData
+      await createFinal(data as CreateFinalData);
       setShowForm(false);
       await loadFinals();
     } catch (err) {
@@ -117,7 +118,7 @@ export default function FinalsPage() {
         {showForm && (
           <div className="mb-8">
             <FinalForm
-              onSubmit={handleCreateFinal}
+              onSubmit={handleSubmitFinal}
               onCancel={handleCancelForm}
               isLoading={isSubmitting}
             />
