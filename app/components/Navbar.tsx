@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faUsers, faTrophy, faTable, faMedal, faLayerGroup, faArrowRightArrowLeft, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,28 +29,28 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
-            <a href="/" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <FontAwesomeIcon icon={faTrophy} className="text-white text-sm" />
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
                 Padel Torneo
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
                 >
                   <FontAwesomeIcon icon={link.icon} className="mr-2 text-xs" />
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -77,7 +78,7 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
                 href={link.href}
                 className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
@@ -85,7 +86,7 @@ export default function Navbar() {
               >
                 <FontAwesomeIcon icon={link.icon} className="mr-3 text-sm" />
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
