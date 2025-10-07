@@ -113,8 +113,8 @@ export class GroupTeamService {
       }).map(team => ({
         team: {
           id: team.id,
-          player1: team.player1 && typeof team.player1 === 'object' && 'name' in team.player1 ? { name: team.player1.name } : undefined,
-          player2: team.player2 && typeof team.player2 === 'object' && 'name' in team.player2 ? { name: team.player2.name } : undefined,
+          player1: team.player1 && typeof team.player1 === 'object' && 'name' in team.player1 ? { name: String(team.player1.name) } : undefined,
+          player2: team.player2 && typeof team.player2 === 'object' && 'name' in team.player2 ? { name: String(team.player2.name) } : undefined,
         },
         assigned: assignmentMap.has(`${group.id}-${team.id}`) || false
       })) || [];
