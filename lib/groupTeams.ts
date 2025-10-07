@@ -113,8 +113,8 @@ export class GroupTeamService {
       }).map(team => ({
         team: {
           id: team.id,
-          player1: team.player1,
-          player2: team.player2,
+          player1: team.player1 ? { name: team.player1.name } : undefined,
+          player2: team.player2 ? { name: team.player2.name } : undefined,
         },
         assigned: assignmentMap.has(`${group.id}-${team.id}`) || false
       })) || [];
