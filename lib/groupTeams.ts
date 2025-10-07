@@ -199,6 +199,7 @@ export class GroupTeamService {
         id,
         player1_id,
         player2_id,
+        created_at,
         player1:players!teams_player1_id_fkey(id, name),
         player2:players!teams_player2_id_fkey(id, name)
       `)
@@ -209,6 +210,16 @@ export class GroupTeamService {
       throw new Error(`Error fetching unassigned teams: ${error.message}`);
     }
 
-    return data || [];
+    // Transform the data to match Team interface
+    const transformedData = data?.map(team => ({
+      id: team.id,
+      player1_id: team.player1_id,
+      player2_id: team.player2_id,
+      created_at: team.created_at,
+      player1: Array.isArray(team.player1) ? team.player1[0] : team.player1,
+      player2: Array.isArray(team.player2) ? team.player2[0] : team.player2,
+    })) || [];
+
+    return transformedData;
   }
 }
