@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { GroupTeam, CreateGroupTeamData, GroupWithTeams, TeamAssignment } from '@/types/groupTeam';
+import { Team } from '@/types/team';
 
 export class GroupTeamService {
   // Get all group-team assignments
@@ -191,7 +192,7 @@ export class GroupTeamService {
   }
 
   // Get unassigned teams
-  static async getUnassignedTeams(): Promise<any[]> {
+  static async getUnassignedTeams(): Promise<Team[]> {
     const { data, error } = await supabase
       .from('teams')
       .select(`

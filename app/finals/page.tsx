@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrophy, faSpinner, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Final } from '@/types/final';
+import { Final, CreateFinalData } from '@/types/final';
 import { getFinals, createFinal } from '@/lib/finals';
 import FinalCard from '../components/FinalCard';
 import FinalForm from '../components/FinalForm';
@@ -33,7 +33,7 @@ export default function FinalsPage() {
     }
   };
 
-  const handleCreateFinal = async (data: any) => {
+  const handleCreateFinal = async (data: CreateFinalData) => {
     try {
       setIsSubmitting(true);
       await createFinal(data);
