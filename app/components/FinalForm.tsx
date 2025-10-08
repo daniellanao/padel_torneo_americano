@@ -45,19 +45,19 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
     const newErrors: { team1_id?: string; team2_id?: string; type?: string } = {};
     
     if (!formData.team1_id) {
-      newErrors.team1_id = 'Team 1 is required';
+      newErrors.team1_id = 'El Equipo 1 es requerido';
     }
     
     if (!formData.team2_id) {
-      newErrors.team2_id = 'Team 2 is required';
+      newErrors.team2_id = 'El Equipo 2 es requerido';
     }
     
     if (formData.team1_id && formData.team2_id && formData.team1_id === formData.team2_id) {
-      newErrors.team2_id = 'Team 2 must be different from Team 1';
+      newErrors.team2_id = 'El Equipo 2 debe ser diferente al Equipo 1';
     }
 
     if (!formData.type) {
-      newErrors.type = 'Final type is required';
+      newErrors.type = 'El tipo de final es requerido';
     }
 
     setErrors(newErrors);
@@ -97,58 +97,58 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
     if (team.player1?.name && team.player2?.name) {
       return `${team.player1.name} & ${team.player2.name}`;
     }
-    return `Team ${team.id}`;
+    return `Equipo ${team.id}`;
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+    <div className="bg-gray-800 rounded-lg shadow-md p-6 border border-gray-700">
       <div className="flex items-center mb-4">
         <FontAwesomeIcon icon={faTrophy} className="text-blue-600 mr-2" />
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-          {final ? 'Edit Final Match' : 'Add New Final Match'}
+        <h3 className="text-sm font-semibold text-white">
+          {final ? 'Editar Partido Final' : 'Agregar Nuevo Partido Final'}
         </h3>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label htmlFor="type" className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Final Type
+            <label htmlFor="type" className="block text-xs font-medium text-gray-300 mb-1">
+              Tipo de Final
             </label>
             <select
               id="type"
               name="type"
               value={formData.type}
               onChange={handleChange}
-              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                errors.type ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 text-white ${
+                errors.type ? 'border-red-500' : 'border-gray-600'
               }`}
               disabled={isLoading}
             >
-              <option value="quarter">Quarter Final</option>
-              <option value="semis">Semi Final</option>
+              <option value="quarter">Cuarto de Final</option>
+              <option value="semis">Semifinal</option>
               <option value="final">Final</option>
             </select>
             {errors.type && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.type}</p>
+              <p className="mt-1 text-xs text-red-400">{errors.type}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="team1_id" className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Team 1
+            <label htmlFor="team1_id" className="block text-xs font-medium text-gray-300 mb-1">
+              Equipo 1
             </label>
             <select
               id="team1_id"
               name="team1_id"
               value={formData.team1_id}
               onChange={handleChange}
-              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                errors.team1_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 text-white ${
+                errors.team1_id ? 'border-red-500' : 'border-gray-600'
               }`}
               disabled={isLoading || loadingTeams}
             >
-              <option value={0}>Select Team 1</option>
+              <option value={0}>Seleccionar Equipo 1</option>
               {teams.map((team) => (
                 <option key={team.id} value={team.id}>
                   {getTeamName(team)}
@@ -156,25 +156,25 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
               ))}
             </select>
             {errors.team1_id && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.team1_id}</p>
+              <p className="mt-1 text-xs text-red-400">{errors.team1_id}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="team2_id" className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Team 2
+            <label htmlFor="team2_id" className="block text-xs font-medium text-gray-300 mb-1">
+              Equipo 2
             </label>
             <select
               id="team2_id"
               name="team2_id"
               value={formData.team2_id}
               onChange={handleChange}
-              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white ${
-                errors.team2_id ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+              className={`w-full px-3 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-gray-600 text-white ${
+                errors.team2_id ? 'border-red-500' : 'border-gray-600'
               }`}
               disabled={isLoading || loadingTeams}
             >
-              <option value={0}>Select Team 2</option>
+              <option value={0}>Seleccionar Equipo 2</option>
               {teams.map((team) => (
                 <option key={team.id} value={team.id}>
                   {getTeamName(team)}
@@ -182,7 +182,7 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
               ))}
             </select>
             {errors.team2_id && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.team2_id}</p>
+              <p className="mt-1 text-xs text-red-400">{errors.team2_id}</p>
             )}
           </div>
         </div>
@@ -191,11 +191,11 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
           <button
             type="button"
             onClick={onCancel}
-            className="px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50"
+            className="px-3 py-2 text-xs font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50"
             disabled={isLoading}
           >
             <FontAwesomeIcon icon={faTimes} className="mr-2" />
-            Cancel
+            Cancelar
           </button>
           <button
             type="submit"
@@ -203,7 +203,7 @@ export default function FinalForm({ final, onSubmit, onCancel, isLoading }: Fina
             disabled={isLoading || loadingTeams}
           >
             <FontAwesomeIcon icon={faSave} className="mr-2" />
-            {isLoading ? 'Saving...' : (final ? 'Update' : 'Create')}
+            {isLoading ? 'Guardando...' : (final ? 'Actualizar' : 'Crear')}
           </button>
         </div>
       </form>

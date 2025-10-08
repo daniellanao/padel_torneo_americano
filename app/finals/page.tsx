@@ -26,7 +26,7 @@ export default function FinalsPage() {
       const finalsData = await getFinals();
       setFinals(finalsData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load finals');
+      setError(err instanceof Error ? err.message : 'Error al cargar finales');
       console.error('Error loading finals:', err);
     } finally {
       setLoading(false);
@@ -41,7 +41,7 @@ export default function FinalsPage() {
       setShowForm(false);
       await loadFinals();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create final');
+      setError(err instanceof Error ? err.message : 'Error al crear final');
       console.error('Error creating final:', err);
     } finally {
       setIsSubmitting(false);
@@ -66,12 +66,12 @@ export default function FinalsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="min-h-screen bg-gray-900 pt-16">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
               <FontAwesomeIcon icon={faSpinner} className="animate-spin text-4xl text-blue-600 mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">Loading finals...</p>
+              <p className="text-gray-400">Cargando finales...</p>
             </div>
           </div>
         </div>
@@ -80,18 +80,18 @@ export default function FinalsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gray-900 pt-16">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+              <h1 className="text-3xl font-bold text-white flex items-center">
                 <FontAwesomeIcon icon={faTrophy} className="mr-3 text-yellow-500" />
-                Tournament Finals
+                Finales del Torneo
               </h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-400">
-                Manage quarter finals, semi finals, and the final match
+              <p className="mt-2 text-gray-400">
+                Gestiona cuartos de final, semifinales y el partido final
               </p>
             </div>
             <button
@@ -99,17 +99,17 @@ export default function FinalsPage() {
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
             >
               <FontAwesomeIcon icon={faPlus} className="mr-2" />
-              Add Final Match
+              Agregar Partido Final
             </button>
           </div>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+          <div className="mb-6 bg-red-900/20 border border-red-800 rounded-lg p-4">
             <div className="flex items-center">
-              <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-500 mr-2" />
-              <p className="text-red-700 dark:text-red-400">{error}</p>
+              <FontAwesomeIcon icon={faExclamationTriangle} className="text-red-400 mr-2" />
+              <p className="text-red-300">{error}</p>
             </div>
           </div>
         )}
@@ -129,8 +129,8 @@ export default function FinalsPage() {
         <div className="space-y-8">
           {/* Quarter Finals */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Quarter Finals ({groupedFinals.quarter.length})
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Cuartos de Final ({groupedFinals.quarter.length})
             </h2>
             {groupedFinals.quarter.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -143,16 +143,16 @@ export default function FinalsPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                No quarter finals yet
+              <div className="text-center py-8 text-gray-400">
+                Aún no hay cuartos de final
               </div>
             )}
           </div>
 
           {/* Semi Finals */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Semi Finals ({groupedFinals.semis.length})
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Semifinales ({groupedFinals.semis.length})
             </h2>
             {groupedFinals.semis.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -165,15 +165,15 @@ export default function FinalsPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                No semi finals yet
+              <div className="text-center py-8 text-gray-400">
+                Aún no hay semifinales
               </div>
             )}
           </div>
 
           {/* Final */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-xl font-semibold text-white mb-4">
               Final ({groupedFinals.final.length})
             </h2>
             {groupedFinals.final.length > 0 ? (
@@ -187,8 +187,8 @@ export default function FinalsPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                No final match yet
+              <div className="text-center py-8 text-gray-400">
+                Aún no hay partido final
               </div>
             )}
           </div>
@@ -197,18 +197,18 @@ export default function FinalsPage() {
         {/* Empty State */}
         {finals.length === 0 && !loading && (
           <div className="text-center py-12">
-            <FontAwesomeIcon icon={faTrophy} className="text-6xl text-gray-300 dark:text-gray-600 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No finals matches yet
+            <FontAwesomeIcon icon={faTrophy} className="text-6xl text-gray-600 mb-4" />
+            <h3 className="text-lg font-medium text-white mb-2">
+              Aún no hay partidos de finales
             </h3>
-            <p className="text-gray-500 dark:text-gray-400 mb-6">
-              Start by adding your first final match
+            <p className="text-gray-400 mb-6">
+              Comienza agregando tu primer partido final
             </p>
             <button
               onClick={() => setShowForm(true)}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Add Final Match
+              Agregar Partido Final
             </button>
           </div>
         )}

@@ -38,7 +38,7 @@ export default function MatchesPage() {
         if (!grouped.has(match.group_id)) {
           grouped.set(match.group_id, {
             groupId: match.group_id,
-            groupName: match.group?.name || `Group ${match.group_id}`,
+            groupName: match.group?.name || `Grupo ${match.group_id}`,
             matches: []
           });
         }
@@ -52,7 +52,7 @@ export default function MatchesPage() {
       
       setGroupMatches(groupedArray);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load matches');
+      setError(err instanceof Error ? err.message : 'Error al cargar partidos');
       console.error('Error loading matches:', err);
     } finally {
       setIsLoading(false);
@@ -76,19 +76,19 @@ export default function MatchesPage() {
   const stats = getTotalStats();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-900 pt-24 pb-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <FontAwesomeIcon icon={faTable} className="text-blue-600 text-2xl mr-3" />
               <div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Matches
+                <h1 className="text-xl font-bold text-white">
+                  Partidos
                 </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  All tournament matches
+                <p className="text-sm text-gray-400 mt-1">
+                  Todos los partidos del torneo
                 </p>
               </div>
             </div>
@@ -99,92 +99,92 @@ export default function MatchesPage() {
               className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
             >
               <FontAwesomeIcon icon={faRefresh} className={`mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-              Refresh
+              Actualizar
             </button>
           </div>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Total Matches</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
+                <p className="text-xs text-gray-400">Total Partidos</p>
+                <p className="text-2xl font-bold text-white">{stats.total}</p>
               </div>
               <FontAwesomeIcon icon={faTable} className="text-blue-600 text-2xl" />
             </div>
           </div>
           
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Pending</p>
-                <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">{stats.pending}</p>
+                <p className="text-xs text-gray-400">Pendientes</p>
+                <p className="text-2xl font-bold text-orange-400">{stats.pending}</p>
               </div>
-              <FontAwesomeIcon icon={faSpinner} className="text-orange-600 text-2xl" />
+              <FontAwesomeIcon icon={faSpinner} className="text-orange-400 text-2xl" />
             </div>
           </div>
           
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+          <div className="bg-gray-800 rounded-lg shadow-md p-4 border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Completed</p>
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.completed}</p>
+                <p className="text-xs text-gray-400">Completados</p>
+                <p className="text-2xl font-bold text-green-400">{stats.completed}</p>
               </div>
-              <FontAwesomeIcon icon={faRefresh} className="text-green-600 text-2xl" />
+              <FontAwesomeIcon icon={faRefresh} className="text-green-400 text-2xl" />
             </div>
           </div>
         </div>
 
         {/* Filter */}
         <div className="mb-6 flex items-center space-x-2">
-          <FontAwesomeIcon icon={faFilter} className="text-gray-500 text-sm" />
-          <span className="text-xs text-gray-600 dark:text-gray-400">Filter:</span>
+          <FontAwesomeIcon icon={faFilter} className="text-gray-400 text-sm" />
+          <span className="text-xs text-gray-400">Filtrar:</span>
           <button
             onClick={() => setFilterStatus('all')}
             className={`px-3 py-1 text-xs rounded ${
               filterStatus === 'all'
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
-            All ({stats.total})
+            Todos ({stats.total})
           </button>
           <button
             onClick={() => setFilterStatus('pending')}
             className={`px-3 py-1 text-xs rounded ${
               filterStatus === 'pending'
                 ? 'bg-orange-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
-            Pending ({stats.pending})
+            Pendientes ({stats.pending})
           </button>
           <button
             onClick={() => setFilterStatus('completed')}
             className={`px-3 py-1 text-xs rounded ${
               filterStatus === 'completed'
                 ? 'bg-green-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
-            Completed ({stats.completed})
+            Completados ({stats.completed})
           </button>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
+          <div className="mb-6 bg-red-900/20 border border-red-800 rounded-md p-4">
             <div className="flex">
               <div className="flex-shrink-0">
                 <FontAwesomeIcon icon={faSpinner} className="h-5 w-5 text-red-400" />
               </div>
               <div className="ml-3">
-                <h3 className="text-xs font-medium text-red-800 dark:text-red-200">
+                <h3 className="text-xs font-medium text-red-200">
                   Error
                 </h3>
-                <div className="mt-2 text-xs text-red-700 dark:text-red-300">
+                <div className="mt-2 text-xs text-red-300">
                   {error}
                 </div>
               </div>
@@ -196,18 +196,18 @@ export default function MatchesPage() {
         {isLoading && groupMatches.length === 0 ? (
           <div className="text-center py-8">
             <FontAwesomeIcon icon={faSpinner} className="text-blue-600 text-3xl animate-spin mb-4" />
-            <p className="text-sm text-gray-600 dark:text-gray-400">Loading matches...</p>
+            <p className="text-sm text-gray-400">Cargando partidos...</p>
           </div>
         ) : groupMatches.length === 0 ? (
           /* Empty State */
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+          <div className="bg-gray-800 rounded-lg shadow-md p-8 border border-gray-700">
             <div className="text-center py-8">
               <FontAwesomeIcon icon={faTable} className="text-gray-400 text-4xl mb-4" />
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-                No Matches Available
+              <h3 className="text-sm font-medium text-white mb-2">
+                No hay partidos disponibles
               </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Start the tournament from the Group Stage page to generate matches.
+              <p className="text-xs text-gray-400">
+                Inicia el torneo desde la página de Fase de Grupos para generar partidos.
               </p>
             </div>
           </div>
@@ -220,11 +220,11 @@ export default function MatchesPage() {
               
               return (
                 <div key={group.groupId}>
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                  <h2 className="text-lg font-bold text-white mb-4 flex items-center">
                     <FontAwesomeIcon icon={faTable} className="text-blue-600 mr-2 text-sm" />
                     {group.groupName}
-                    <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
-                      ({filteredMatches.length} matches)
+                    <span className="ml-2 text-xs font-normal text-gray-400">
+                      ({filteredMatches.length} partidos)
                     </span>
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

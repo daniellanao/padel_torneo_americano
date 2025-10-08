@@ -22,7 +22,21 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
     if (team?.player1?.name && team?.player2?.name) {
       return `${team.player1.name} & ${team.player2.name}`;
     }
-    return `Team ${team?.id}`;
+    return `Equipo ${team?.id}`;
+  };
+
+  const getGroupColorClasses = (groupId: number) => {
+    const colors = ['red', 'blue', 'yellow', 'green'];
+    const colorIndex = (groupId - 1) % colors.length;
+    const color = colors[colorIndex];
+    
+    switch (color) {
+      case 'red': return 'bg-red-600 border-red-500';
+      case 'blue': return 'bg-blue-600 border-blue-500';
+      case 'yellow': return 'bg-yellow-500 border-yellow-400';
+      case 'green': return 'bg-green-600 border-green-500';
+      default: return 'bg-blue-600 border-blue-500';
+    }
   };
 
   const handleSaveScore = async () => {
@@ -32,17 +46,17 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
 
       // Validation
       if (team1Score < 0 || team2Score < 0) {
-        setError('Scores cannot be negative');
+        setError('Las puntuaciones no pueden ser negativas');
         return;
       }
 
       if (team1Score === team2Score) {
-        setError('Scores cannot be equal - there must be a winner');
+        setError('Las puntuaciones no pueden ser iguales - debe haber un ganador');
         return;
       }
 
       if (team1Score < 6 && team2Score < 6) {
-        setError('At least one team must reach 6 games to win');
+        setError('Al menos un equipo debe llegar a 6 juegos para ganar');
         return;
       }
 
@@ -58,7 +72,7 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
       setIsEditing(false);
       onMatchUpdated();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save score');
+      setError(err instanceof Error ? err.message : 'Error al guardar puntuación');
       console.error('Error saving score:', err);
     } finally {
       setIsSaving(false);
@@ -73,24 +87,24 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
   };
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border-2 transition-colors ${
+    <div className={`bg-gray-800 rounded-lg shadow-md p-4 border-2 transition-colors ${
       match.status === 'completed' 
-        ? 'border-green-200 dark:border-green-800' 
-        : 'border-gray-200 dark:border-gray-700'
+        ? 'border-green-800' 
+        : 'border-gray-700'
     }`}>
       {/* Group Name */}
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-          {match.group?.name || `Group ${match.group_id}`}
+      <div className={`flex items-center justify-between mb-3 px-3 py-2 -mx-4 -mt-4 rounded-t-lg ${getGroupColorClasses(match.group_id)}`}>
+        <span className="text-xs font-medium text-white">
+          {match.group?.name || `Grupo ${match.group_id}`}
         </span>
         {match.status === 'completed' && (
-          <div className="flex items-center text-xs text-green-600 dark:text-green-400">
+          <div className="flex items-center text-xs text-white bg-black/20 px-2 py-1 rounded">
             <FontAwesomeIcon icon={faCheckCircle} className="mr-1" />
-            Completed
+            Completado
           </div>
         )}
         {match.status === 'pending' && (
-          <span className="text-xs text-gray-500 dark:text-gray-400">Pending</span>
+          <span className="text-xs text-white bg-black/20 px-2 py-1 rounded">Pendiente</span>
         )}
       </div>
 
@@ -102,8 +116,8 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
             <FontAwesomeIcon icon={faUsers} className="text-blue-600 mr-2 text-xs" />
             <span className={`text-sm font-medium ${
               match.status === 'completed' && match.team_winner_id === match.team1_id
-                ? 'text-green-600 dark:text-green-400 font-bold'
-                : 'text-gray-900 dark:text-white'
+                ? 'text-green-400 font-bold'
+                : 'text-white'
             }`}>
               {getTeamName(match.team1)}
               {match.status === 'completed' && match.team_winner_id === match.team1_id && (
@@ -118,10 +132,10 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
               max="7"
               value={team1Score}
               onChange={(e) => setTeam1Score(parseInt(e.target.value) || 0)}
-              className="w-16 px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-16 px-2 py-1 text-sm text-center border border-gray-600 rounded bg-gray-700 text-white"
             />
           ) : (
-            <span className="text-lg font-bold text-gray-900 dark:text-white w-16 text-center">
+            <span className="text-lg font-bold text-white w-16 text-center">
               {match.team1_score ?? '-'}
             </span>
           )}
@@ -133,8 +147,8 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
             <FontAwesomeIcon icon={faUsers} className="text-blue-600 mr-2 text-xs" />
             <span className={`text-sm font-medium ${
               match.status === 'completed' && match.team_winner_id === match.team2_id
-                ? 'text-green-600 dark:text-green-400 font-bold'
-                : 'text-gray-900 dark:text-white'
+                ? 'text-green-400 font-bold'
+                : 'text-white'
             }`}>
               {getTeamName(match.team2)}
               {match.status === 'completed' && match.team_winner_id === match.team2_id && (
@@ -149,10 +163,10 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
               max="7"
               value={team2Score}
               onChange={(e) => setTeam2Score(parseInt(e.target.value) || 0)}
-              className="w-16 px-2 py-1 text-sm text-center border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-16 px-2 py-1 text-sm text-center border border-gray-600 rounded bg-gray-700 text-white"
             />
           ) : (
-            <span className="text-lg font-bold text-gray-900 dark:text-white w-16 text-center">
+            <span className="text-lg font-bold text-white w-16 text-center">
               {match.team2_score ?? '-'}
             </span>
           )}
@@ -161,7 +175,7 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
 
       {/* Error Message */}
       {error && (
-        <div className="mt-3 text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-2 rounded">
+        <div className="mt-3 text-xs text-red-400 bg-red-900/20 p-2 rounded">
           {error}
         </div>
       )}
@@ -173,10 +187,10 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
             <button
               onClick={handleCancel}
               disabled={isSaving}
-              className="px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50"
+              className="px-3 py-1 text-xs font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded hover:bg-gray-600 disabled:opacity-50"
             >
               <FontAwesomeIcon icon={faTimes} className="mr-1" />
-              Cancel
+              Cancelar
             </button>
             <button
               onClick={handleSaveScore}
@@ -186,12 +200,12 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
               {isSaving ? (
                 <>
                   <FontAwesomeIcon icon={faSpinner} className="mr-1 animate-spin" />
-                  Saving...
+                  Guardando...
                 </>
               ) : (
                 <>
                   <FontAwesomeIcon icon={faSave} className="mr-1" />
-                  Save Score
+                  Guardar Puntuación
                 </>
               )}
             </button>
@@ -201,7 +215,7 @@ export default function MatchCard({ match, onMatchUpdated }: MatchCardProps) {
             onClick={() => setIsEditing(true)}
             className="px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700"
           >
-            Enter Score
+            Ingresar Puntuación
           </button>
         ) : null}
       </div>
