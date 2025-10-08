@@ -130,16 +130,20 @@ export default function StandingsTable({ groupName, standings, isLoading = false
           <tbody className="bg-gray-900 divide-y divide-gray-600">
             {sortedStandings.map((standing, index) => {
               const gameDiff = calculateGameDifference(standing);
+              const isTop2 = index < 2;
               return (
-                <tr key={standing.id} className="hover:bg-gray-800 transition-colors">
+                <tr key={standing.id} className={`transition-colors ${
+                  isTop2 
+                    ? 'bg-green-900 bg-opacity-20 border-l-4 border-green-500 hover:bg-opacity-30' 
+                    : 'hover:bg-gray-800'
+                }`}>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-base font-bold text-white">
+                    <span className={`text-base font-bold ${isTop2 ? 'text-yellow-400' : 'text-white'}`}>
                       {index + 1}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <FontAwesomeIcon icon={faUsers} className="text-gray-400 mr-2 text-base" />
                       <span className="text-base font-medium text-white">
                         {getTeamName(standing)}
                       </span>
