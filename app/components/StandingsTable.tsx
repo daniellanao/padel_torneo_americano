@@ -57,13 +57,13 @@ export default function StandingsTable({ groupName, standings, isLoading = false
     return (
       <div className="bg-gray-900 rounded-lg shadow-md p-6 border border-gray-700">
         <div className="flex items-center mb-4">
-          <FontAwesomeIcon icon={faTrophy} className="text-blue-400 mr-2 text-sm" />
-          <h3 className="text-sm font-semibold text-white">
+          <FontAwesomeIcon icon={faTrophy} className="text-blue-400 mr-2 text-lg" />
+          <h3 className="text-lg font-semibold text-white">
             {groupName}
           </h3>
         </div>
         <div className="text-center py-4">
-          <p className="text-xs text-gray-400">
+          <p className="text-base text-gray-400">
             No hay clasificaciones disponibles para este grupo.
           </p>
         </div>
@@ -82,15 +82,15 @@ export default function StandingsTable({ groupName, standings, isLoading = false
   return (
     <div className="bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-700">
       {/* Header */}
-      <div className={`px-6 py-3 ${getGroupColorClasses(groupColor)} border-b border-gray-600`}>
+      <div className={`px-6 py-4 ${getGroupColorClasses(groupColor)} border-b border-gray-600`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <FontAwesomeIcon icon={faTrophy} className="text-white mr-2 text-sm" />
-            <h3 className="text-sm font-semibold text-white">
+            <FontAwesomeIcon icon={faTrophy} className="text-white mr-3 text-xl" />
+            <h3 className="text-xl font-semibold text-white">
               {groupName}
             </h3>
           </div>
-          <span className="text-xs text-white bg-black bg-opacity-20 px-2 py-1 rounded">
+          <span className="text-sm text-white bg-black bg-opacity-20 px-3 py-1 rounded">
             {standings.length} equipos
           </span>
         </div>
@@ -101,28 +101,28 @@ export default function StandingsTable({ groupName, standings, isLoading = false
         <table className="min-w-full divide-y divide-gray-600">
           <thead className="bg-gray-800">
             <tr>
-              <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
                 Pos
               </th>
-              <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
                 Equipo
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 PJ
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 G
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 P
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 GG
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 GP
               </th>
-              <th scope="col" className="px-6 py-2 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-center text-sm font-medium text-gray-300 uppercase tracking-wider">
                 Dif
               </th>
             </tr>
@@ -132,46 +132,46 @@ export default function StandingsTable({ groupName, standings, isLoading = false
               const gameDiff = calculateGameDifference(standing);
               return (
                 <tr key={standing.id} className="hover:bg-gray-800 transition-colors">
-                  <td className="px-6 py-2 whitespace-nowrap">
-                    <span className="text-xs font-bold text-white">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="text-base font-bold text-white">
                       {index + 1}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <FontAwesomeIcon icon={faUsers} className="text-gray-400 mr-2 text-xs" />
-                      <span className="text-xs font-medium text-white">
+                      <FontAwesomeIcon icon={faUsers} className="text-gray-400 mr-2 text-base" />
+                      <span className="text-base font-medium text-white">
                         {getTeamName(standing)}
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className="text-xs text-gray-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-base text-gray-300">
                       {standing.matches_played}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className="text-xs font-medium text-green-400">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-base font-medium text-green-400">
                       {standing.matches_won}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className="text-xs font-medium text-red-400">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-base font-medium text-red-400">
                       {standing.matches_lost}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className="text-xs text-gray-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-base text-gray-300">
                       {standing.games_won}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className="text-xs text-gray-300">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className="text-base text-gray-300">
                       {standing.games_lost}
                     </span>
                   </td>
-                  <td className="px-6 py-2 whitespace-nowrap text-center">
-                    <span className={`text-xs font-medium ${
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <span className={`text-base font-medium ${
                       gameDiff > 0 
                         ? 'text-green-400' 
                         : gameDiff < 0 
@@ -189,8 +189,8 @@ export default function StandingsTable({ groupName, standings, isLoading = false
       </div>
 
       {/* Legend */}
-      <div className="px-6 py-2 bg-gray-800 border-t border-gray-600">
-        <p className="text-xs text-gray-400">
+      <div className="px-6 py-3 bg-gray-800 border-t border-gray-600">
+        <p className="text-sm text-gray-400">
           PJ: Partidos Jugados • G: Ganados • P: Perdidos • GG: Games Ganados • GP: Games Perdidos • Dif: Diferencia
         </p>
       </div>
