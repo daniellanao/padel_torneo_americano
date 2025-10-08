@@ -19,29 +19,29 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black shadow-lg border-b border-gray-800 w-full">
+      <div className="w-full lg:w-full">
+        <div className="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8 w-full">
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <FontAwesomeIcon icon={faTrophy} className="text-white text-sm" />
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-              Torneo La Caja Padel
+              <span className="ml-2 text-xl font-bold text-white">
+                Torneo Padel
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          <div className="hidden md:block flex-1">
+            <div className="ml-10 flex items-baseline space-x-4 justify-end">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-white hover:text-blue-400 hover:bg-gray-800 transition-colors duration-200"
                 >
                   <FontAwesomeIcon icon={link.icon} className="mr-2 text-xs" />
                   {link.name}
@@ -54,7 +54,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -70,13 +70,13 @@ export default function Navbar() {
 
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div className="md:hidden w-full">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black border-t border-gray-800 w-full">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-white hover:text-blue-400 hover:bg-gray-800 transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <FontAwesomeIcon icon={link.icon} className="mr-3 text-sm" />

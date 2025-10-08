@@ -142,13 +142,18 @@ export default function StandingsPage() {
         ) : (
           /* Standings Tables */
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {groupStandings.map((group) => (
-              <StandingsTable
-                key={group.groupId}
-                groupName={group.groupName}
-                standings={group.standings}
-              />
-            ))}
+            {groupStandings.map((group, index) => {
+              const colors = ['red', 'blue', 'yellow', 'green'] as const;
+              const groupColor = colors[index % colors.length];
+              return (
+                <StandingsTable
+                  key={group.groupId}
+                  groupName={group.groupName}
+                  standings={group.standings}
+                  groupColor={groupColor}
+                />
+              );
+            })}
           </div>
         )}
 

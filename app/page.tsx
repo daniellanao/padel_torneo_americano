@@ -2,100 +2,82 @@
 
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrophy, faUsers, faTable, faMedal, faSpinner, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faSpinner, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { Standing } from '@/types/standing';
+import { StandingService } from '@/lib/standings';
+import StandingsTable from '@/app/components/StandingsTable';
 
-export default function Home() {
-  const [tournamentStats, setTournamentStats] = useState({
-    totalPlayers: 0,
-    totalTeams: 0,
-    totalGroups: 0,
-    totalMatches: 0,
-    completedMatches: 0,
-    pendingMatches: 0
-  });
+interface GroupStandings {
+  groupId: number;
+  groupName: string;
+  standings: Standing[];
+}
+
+export default function HomePage() {
+  const [groupStandings, setGroupStandings] = useState<GroupStandings[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadTournamentStats();
+    loadStandings();
   }, []);
 
-  const loadTournamentStats = async () => {
+  const loadStandings = async () => {
     try {
       setIsLoading(true);
       setError(null);
       
-      // Simular carga de estadísticas del torneo
-      // En una implementación real, harías llamadas a las APIs correspondientes
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Get all standings
+      const allStandings = await StandingService.getStandings();
       
-      setTournamentStats({
-        totalPlayers: 24,
-        totalTeams: 12,
-        totalGroups: 3,
-        totalMatches: 18,
-        completedMatches: 12,
-        pendingMatches: 6
+      // Group standings by group_id
+      const grouped = new Map<number, GroupStandings>();
+      
+      allStandings.forEach(standing => {
+        if (!grouped.has(standing.group_id)) {
+          grouped.set(standing.group_id, {
+            groupId: standing.group_id,
+            groupName: standing.group?.name || `Group ${standing.group_id}`,
+            standings: []
+          });
+        }
+        grouped.get(standing.group_id)!.standings.push(standing);
       });
+      
+      // Convert to array and sort by group name
+      const groupedArray = Array.from(grouped.values()).sort((a, b) => 
+        a.groupName.localeCompare(b.groupName)
+      );
+      
+      setGroupStandings(groupedArray);
     } catch (err) {
-      setError('Error al cargar las estadísticas del torneo');
-      console.error('Error loading tournament stats:', err);
+      setError(err instanceof Error ? err.message : 'Error al cargar las clasificaciones');
+      console.error('Error loading standings:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const statsCards = [
-    {
-      title: 'Jugadores',
-      value: tournamentStats.totalPlayers,
-      icon: faUsers,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100 dark:bg-blue-900'
-    },
-    {
-      title: 'Equipos',
-      value: tournamentStats.totalTeams,
-      icon: faTrophy,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100 dark:bg-green-900'
-    },
-    {
-      title: 'Grupos',
-      value: tournamentStats.totalGroups,
-      icon: faTable,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100 dark:bg-purple-900'
-    },
-    {
-      title: 'Partidos',
-      value: tournamentStats.totalMatches,
-      icon: faMedal,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100 dark:bg-orange-900'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-900 pt-24 pb-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <FontAwesomeIcon icon={faTrophy} className="text-blue-600 text-2xl mr-3" />
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                  Torneo La Caja Padel
+                <h1 className="text-xl font-bold text-white dark:text-white">
+                  Inicio
                 </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Sistema de gestión de torneo de pádel
+                <p className="text-sm text-white mt-1">
+                  Inicio del torneo
                 </p>
               </div>
-            </div>
-            
+        </div>
+
             <button
-              onClick={loadTournamentStats}
+              onClick={loadStandings}
               disabled={isLoading}
               className="inline-flex items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
             >
@@ -132,87 +114,69 @@ export default function Home() {
           </div>
         )}
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {statsCards.map((stat, index) => (
-            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <div className="flex items-center">
-                <div className={`${stat.bgColor} rounded-lg p-3 mr-4`}>
-                  <FontAwesomeIcon icon={stat.icon} className={`${stat.color} text-xl`} />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{stat.title}</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {isLoading ? (
-                      <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
-                    ) : (
-                      stat.value
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Tournament Progress */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Progreso del Torneo
-          </h2>
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600 dark:text-gray-400">Partidos Completados</span>
-                <span className="text-gray-900 dark:text-white">
-                  {tournamentStats.completedMatches} / {tournamentStats.totalMatches}
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="bg-green-600 h-2 rounded-full transition-all duration-300"
-                  style={{ 
-                    width: `${tournamentStats.totalMatches > 0 ? (tournamentStats.completedMatches / tournamentStats.totalMatches) * 100 : 0}%` 
-                  }}
-                ></div>
-              </div>
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600 dark:text-gray-400">Partidos Pendientes</span>
-                <span className="text-gray-900 dark:text-white">{tournamentStats.pendingMatches}</span>
-              </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                <div 
-                  className="bg-orange-600 h-2 rounded-full transition-all duration-300"
-                  style={{ 
-                    width: `${tournamentStats.totalMatches > 0 ? (tournamentStats.pendingMatches / tournamentStats.totalMatches) * 100 : 0}%` 
-                  }}
-                ></div>
-              </div>
-            </div>
+        {/* Loading State */}
+        {isLoading && groupStandings.length === 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {[...Array(2)].map((_, i) => (
+              <StandingsTable
+                key={i}
+                groupName="Cargando..."
+                standings={[]}
+                isLoading={true}
+              />
+            ))}
           </div>
-        </div>
-
-        {/* Welcome Message */}
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-6">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <FontAwesomeIcon icon={faTrophy} className="h-6 w-6 text-blue-400" />
-            </div>
-            <div className="ml-4">
-              <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200">
-                ¡Bienvenido al Torneo La Caja Padel!
+        ) : groupStandings.length === 0 ? (
+          /* Empty State */
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+            <div className="text-center py-8">
+              <FontAwesomeIcon icon={faTrophy} className="text-gray-400 text-4xl mb-4" />
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                No hay clasificaciones disponibles
               </h3>
-              <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-                <p>• Navega por las diferentes secciones usando el menú superior</p>
-                <p>• Gestiona jugadores, equipos y grupos desde el pie de página</p>
-                <p>• Sigue el progreso del torneo en tiempo real</p>
-                <p>• Consulta los partidos y clasificaciones actualizadas</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Inicia el torneo desde la página de Fase de Grupos para generar las clasificaciones.
+              </p>
+            </div>
+          </div>
+        ) : (
+          /* Standings Tables */
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {groupStandings.map((group, index) => {
+              const colors = ['red', 'blue', 'yellow', 'green'] as const;
+              const groupColor = colors[index % colors.length];
+              return (
+                <StandingsTable
+                  key={group.groupId}
+                  groupName={group.groupName}
+                  standings={group.standings}
+                  groupColor={groupColor}
+                />
+              );
+            })}
+          </div>
+        )}
+
+        {/* Info Box */}
+        {!isLoading && groupStandings.length > 0 && (
+          <div className="mt-8 bg-gray-900 border border-gray-700 rounded-md p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <FontAwesomeIcon icon={faTrophy} className="h-5 w-5 text-blue-400" />
+              </div>
+              <div className="ml-3">
+                <h3 className="text-xs font-medium text-white">
+                  Cómo funcionan las clasificaciones
+                </h3>
+                <div className="mt-2 text-xs text-gray-300">
+                  <p>• Los equipos se clasifican primero por número de victorias</p>
+                  <p>• Los empates se deshacen por diferencia de juegos (JG - JP)</p>
+                  <p>• Haz clic en el botón Actualizar para actualizar las clasificaciones</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
