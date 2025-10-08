@@ -25,9 +25,7 @@ export default function Navbar() {
           {/* Logo/Brand */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <FontAwesomeIcon icon={faTrophy} className="text-white text-sm" />
-              </div>
+              <img src="/favicon.ico" alt="Logo" className="h-8 w-8" />
               <span className="ml-2 text-xl font-bold text-white">
                 Torneo Padel
               </span>

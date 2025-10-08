@@ -20,11 +20,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Logo */}
           <div className="flex items-center mb-4 md:mb-0">
-            <div className="h-6 w-6 bg-blue-600 rounded-lg flex items-center justify-center mr-2">
-              <FontAwesomeIcon icon={faTrophy} className="text-white text-xs" />
-            </div>
+            <img src="/favicon.ico" alt="Logo" className="h-6 w-6 mr-2" />
             <span className="text-lg font-bold text-white">
-              Torneo La Caja
+              Torneo Padel
             </span>
           </div>
 
