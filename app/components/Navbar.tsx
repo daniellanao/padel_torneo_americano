@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faUsers, faTrophy, faTable, faMedal, faLayerGroup, faArrowRightArrowLeft, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faTrophy, faTable, faMedal, faHome } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,14 +13,9 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Players', href: '/players', icon: faUsers },
-    { name: 'Teams', href: '/teams', icon: faTrophy },
-    { name: 'Groups', href: '/groups', icon: faLayerGroup },
-    { name: 'Assignments', href: '/assignments', icon: faArrowRightArrowLeft },
-    { name: 'Group Stage', href: '/group-stage', icon: faTable },
-    { name: 'Matches', href: '/matches', icon: faTable },
-    { name: 'Standings', href: '/standings', icon: faChartBar },
-    { name: 'Finals', href: '/finals', icon: faMedal },
+    { name: 'Inicio', href: '/', icon: faHome }, 
+    { name: 'Partidos', href: '/matches', icon: faTable },    
+    { name: 'Final', href: '/finals', icon: faMedal },
   ];
 
   return (
@@ -34,7 +29,7 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faTrophy} className="text-white text-sm" />
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                Padel Torneo
+              Torneo La Caja Padel
               </span>
             </Link>
           </div>
